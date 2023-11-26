@@ -11,18 +11,9 @@ import {
     YAxis,
 } from 'recharts'
 import { useUnit, useWeather } from '../hooks/context-hooks'
-import { Weather, WeekDays } from '../protocols'
+import { WeekDays } from '../protocols'
 import dayjs from 'dayjs'
 import { KelvinToUnit } from '../utils'
-
-const mockData = [
-    { x: -1, y: 180 },
-    { x: 1, y: 2 },
-    { x: 2, y: 10 },
-    { x: 3, y: 30 },
-    { x: 4, y: 100 },
-    { x: 5, y: 180 },
-]
 
 export function Upcoming() {
     const { forecast } = useWeather()
