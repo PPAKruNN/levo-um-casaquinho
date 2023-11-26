@@ -1,10 +1,15 @@
 import styled from 'styled-components'
 
-export function InfoBlock() {
+type InfoBlockProps = {
+    title?: string
+    desc?: string | number
+}
+
+export function InfoBlock(props: InfoBlockProps) {
     return (
         <InfoContent>
-            <p>Mínima</p>
-            <h1>31° C</h1>
+            <p>{props.title ?? '--'}</p>
+            <h1>{props.desc ?? '--'}</h1>
         </InfoContent>
     )
 }

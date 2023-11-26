@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Weather, WeatherEnum } from '../protocols'
+import { KelvinToUnit } from '../utils'
 
 type WeatherDisplayProps = {
     weatherState?: WeatherEnum
@@ -8,11 +9,6 @@ type WeatherDisplayProps = {
 }
 
 export function WeatherDisplay(props: WeatherDisplayProps) {
-    function KelvinToUnit(kelvin: number): number {
-        if (props.unit == 'C') return Math.ceil(kelvin - 273.15)
-        return Math.ceil(kelvin * 1.8 - 459.67)
-    }
-
     if (!props.weather)
         return (
             <DisplayContent>
@@ -29,7 +25,7 @@ export function WeatherDisplay(props: WeatherDisplayProps) {
                 <img
                     src={`https://openweathermap.org/img/wn/${props.weather.weather[0].icon}@4x.png`}
                 ></img>
-                <h1>{KelvinToUnit(props.weather.main.temp)}</h1>
+                <h1>{KelvinToUnit(props.weather.main.temp, props.unit)}</h1>
                 <h2>°{props.unit}</h2>
             </div>
             <p>{props.weather.weather[0].description}</p>

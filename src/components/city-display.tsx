@@ -1,10 +1,23 @@
 import styled from 'styled-components'
+import { useWeather } from '../hooks/context-hooks'
 
 export function CityDisplay() {
+    const { geocode } = useWeather()
+
+    if (!geocode)
+        return (
+            <h1>
+                Você ainda não selecionou uma cidade! Faça uma pesquisa na barra
+                de pesquisa ao lado!
+            </h1>
+        )
+
     return (
         <CityContent>
-            <h1>São Paulo</h1>
-            <p>Lat: 23.34 Long: 10.99 </p>
+            <h1>{geocode.local_names.pt}</h1>
+            <p>
+                Lat: {geocode?.lat.toFixed(2)} Long: {geocode?.lon.toFixed(2)}
+            </p>
         </CityContent>
     )
 }
@@ -12,6 +25,7 @@ export function CityDisplay() {
 const CityContent = styled.div`
     display: flex;
     flex-direction: column;
+    gap: 16px;
 
     h1 {
         font-size: 100px;

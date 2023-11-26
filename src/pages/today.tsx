@@ -2,8 +2,13 @@ import styled from 'styled-components'
 import { Tabs } from '../components/tabs'
 import { CityDisplay } from '../components/city-display'
 import { InfoBlock } from '../components/info-block'
+import { useUnit, useWeather } from '../hooks/context-hooks'
+import { KelvinToUnit } from '../utils'
 
 export function Today() {
+    const { weather } = useWeather()
+    const { unit } = useUnit()
+
     return (
         <TodayPage>
             <Tabs />
@@ -11,10 +16,28 @@ export function Today() {
             <div>
                 <CityDisplay />
                 <section>
-                    <InfoBlock />
-                    <InfoBlock />
-                    <InfoBlock />
-                    <InfoBlock />
+                    <InfoBlock
+                        title="Mínima"
+                        desc={`${KelvinToUnit(
+                            weather?.main.temp_min ?? 0,
+                            unit
+                        )} °${unit}`}
+                    />
+                    <InfoBlock
+                        title="Máxima"
+                        desc={`${KelvinToUnit(
+                            weather?.main.temp_max ?? 0,
+                            unit
+                        )} °${unit}`}
+                    />
+                    <InfoBlock
+                        title="Umidade"
+                        desc={`${weather?.main.humidity}%`}
+                    />
+                    <InfoBlock
+                        title="Velocidade do vento"
+                        desc={`${weather?.wind.speed} m/s`}
+                    />
                 </section>
             </div>
 

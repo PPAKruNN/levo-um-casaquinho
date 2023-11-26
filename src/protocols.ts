@@ -52,6 +52,9 @@ export type Weather = {
         temp_max: number
         humidity: number
     }
+    wind: {
+        speed: number
+    }
     weather: {
         id: number
         main: WeatherEnum
