@@ -13,12 +13,15 @@ export function CitySearch() {
 
         const searchValue = cityInput.current.value
         const searchPromise = searchForCity(searchValue)
+        cityInput.current.disabled = true
 
         toast.promise(searchPromise, {
             pending: 'Buscando dados "nas nuvens"',
             error: 'Erro ao se conectar nos servidores meteorológicos, verifique sua conexão com a internet ou tente novamente mais tarde.',
         })
+
         const geocodeOptions = await searchPromise
+        cityInput.current.disabled = false
 
         if (geocodeOptions.length === 0) {
             toast.error(
@@ -36,11 +39,14 @@ export function CitySearch() {
             </span>
 
             <input
+                autoFocus
                 type="text"
                 alt="City search input"
                 placeholder="Procure por uma cidade"
                 ref={cityInput}
-                onSubmit={handleSearch}
+                onKeyDown={(e) => {
+                    if (e.key == 'Enter') handleSearch()
+                }}
             />
         </SearchBox>
     )

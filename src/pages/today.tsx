@@ -48,7 +48,13 @@ export function Today() {
                         </section>
                     </div>
 
-                    <span>Não, você não deve levar um casaquinho</span>
+                    <span>
+                        {weather?.main.temp > 290.15 ||
+                        weather?.main.temp_max > 290.15 ||
+                        weather?.main.temp_min > 290.15
+                            ? 'Não, você não deve levar um casaquinho'
+                            : 'Você deve levar um casaquinho'}
+                    </span>
                 </>
             )}
 
