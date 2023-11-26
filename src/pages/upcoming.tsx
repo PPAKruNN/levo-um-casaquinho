@@ -10,6 +10,10 @@ import {
     XAxis,
     YAxis,
 } from 'recharts'
+import { useUnit, useWeather } from '../hooks/context-hooks'
+import { Weather, WeekDays } from '../protocols'
+import dayjs from 'dayjs'
+import { KelvinToUnit } from '../utils'
 
 const mockData = [
     { x: -1, y: 180 },
@@ -21,48 +25,81 @@ const mockData = [
 ]
 
 export function Upcoming() {
+    const { forecast } = useWeather()
+    const { unit } = useUnit()
+
+    function genData() {
+        if (!forecast || !forecast.list) return
+        const list = forecast?.list
+
+        console.log(list)
+
+        return list.map((curr) => {
+            const date = dayjs
+                .unix(curr.dt)
+                .utcOffset(forecast.city.timezone / 60)
+
+            return {
+                x: `${date.format('DD/MM')} (${WeekDays[date.weekday()]})`,
+                y: KelvinToUnit(curr.main.temp, unit),
+            }
+        })
+    }
+
     return (
-        <TodayPage>
+        <UpcomingPage>
             <Tabs />
 
-            <div>
-                <CityDisplay />
-                <ResponsiveContainer width="95%" height="50%">
-                    <LineChart
-                        width={500}
-                        height={300}
-                        data={mockData}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                        }}
-                    >
-                        <CartesianGrid stroke="#F5F5F5" />
-                        <XAxis dataKey="x" />
-                        <YAxis />
-                        <Tooltip
-                            contentStyle={{
-                                backgroundColor: '#EFEFEF',
-                                borderRadius: '5px',
-                                border: 'none',
+            {!forecast ? (
+                <h1>
+                    Você ainda não selecionou uma cidade! Faça uma pesquisa na
+                    barra de pesquisa ao lado!
+                </h1>
+            ) : (
+                <div>
+                    <CityDisplay />
+                    <ResponsiveContainer width="95%" height="50%">
+                        <LineChart
+                            width={500}
+                            height={300}
+                            data={genData()}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
                             }}
-                            labelStyle={{ color: '#000000' }}
-                        />
-                        <Line type="monotone" dataKey="y" stroke="#4d4494" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </div>
+                        >
+                            <CartesianGrid stroke="#F5F5F5" />
+                            <XAxis dataKey="x" />
+                            <YAxis tickFormatter={(num) => `${num}°${unit}`} />
+                            <Tooltip
+                                contentStyle={{
+                                    backgroundColor: '#EFEFEF',
+                                    borderRadius: '5px',
+                                    border: 'none',
+                                }}
+                                labelStyle={{ color: '#000000' }}
+                                formatter={(num) => `${num} KK`}
+                            />
+                            <Line
+                                type="monotone"
+                                dataKey="y"
+                                stroke="#4d4494"
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            )}
 
             <p>
                 Dados fornecidos pela <a>Open Weather API</a>
             </p>
-        </TodayPage>
+        </UpcomingPage>
     )
 }
 
-const TodayPage = styled.div`
+const UpcomingPage = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;

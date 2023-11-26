@@ -7,7 +7,7 @@ import { Settings } from './settings'
 import { useUnit, useWeather } from '../hooks/context-hooks'
 
 export function ControlPanel() {
-    const { weather } = useWeather()
+    const { weather, forecast } = useWeather()
     const { unit, setUnit } = useUnit()
 
     return (
@@ -28,7 +28,7 @@ export function ControlPanel() {
                 unit={unit}
             />
 
-            <DateDisplay utcNow={weather?.dt} />
+            <DateDisplay utcNow={weather?.dt} shift={forecast?.city.timezone} />
 
             <Settings unit={unit} setUnit={setUnit} />
 

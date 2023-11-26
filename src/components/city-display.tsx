@@ -5,7 +5,6 @@ export function CityDisplay() {
     const { geocode } = useWeather()
 
     if (!geocode) return <></>
-    console.log(geocode)
 
     return (
         <CityContent>
