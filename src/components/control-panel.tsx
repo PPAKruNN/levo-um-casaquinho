@@ -2,11 +2,14 @@ import styled from 'styled-components'
 import logo from '../assets/casaco.svg'
 import { CitySearch } from './city-search'
 import { WeatherDisplay } from './weather-display'
-import { WeatherEnum } from '../protocols'
 import { DateDisplay } from './date-display'
 import { Settings } from './settings'
+import { useUnit, useWeather } from '../hooks/context-hooks'
 
 export function ControlPanel() {
+    const { weather } = useWeather()
+    const { unit, setUnit } = useUnit()
+
     return (
         <AsideBar>
             <header>
@@ -19,11 +22,15 @@ export function ControlPanel() {
 
             <CitySearch />
 
-            <WeatherDisplay weather={WeatherEnum.mist} />
+            <WeatherDisplay
+                weather={weather}
+                weatherState={weather?.weather[0].main}
+                unit={unit}
+            />
 
-            <DateDisplay />
+            <DateDisplay utcNow={weather?.dt} />
 
-            <Settings />
+            <Settings unit={unit} setUnit={setUnit} />
 
             <p>Todos os direitos reservados. 2023.</p>
         </AsideBar>

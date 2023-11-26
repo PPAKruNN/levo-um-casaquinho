@@ -1,25 +1,48 @@
 import styled from 'styled-components'
-import { WeatherEnum } from '../protocols'
+import { Weather, WeatherEnum } from '../protocols'
 
 type WeatherDisplayProps = {
-    weather: WeatherEnum
+    weatherState?: WeatherEnum
+    weather?: Weather
+    unit: string
 }
 
 export function WeatherDisplay(props: WeatherDisplayProps) {
+    function KelvinToUnit(kelvin: number): number {
+        if (props.unit == 'C') return Math.ceil(kelvin - 273.15)
+        return Math.ceil(kelvin * 1.8 - 459.67)
+    }
+
+    if (!props.weather)
+        return (
+            <DisplayContent>
+                <div>
+                    <h1> - - </h1>
+                </div>
+                <hr></hr>
+            </DisplayContent>
+        )
+
     return (
-        <DisplayContent>
+        <DisplayContent $weather={props.weatherState}>
             <div>
-                <span>•</span>
-                <h1>31</h1>
-                <h2>°C</h2>
+                <img
+                    src={`https://openweathermap.org/img/wn/${props.weather.weather[0].icon}@4x.png`}
+                ></img>
+                <h1>{KelvinToUnit(props.weather.main.temp)}</h1>
+                <h2>°{props.unit}</h2>
             </div>
-            <p>Céu aberto</p>
+            <p>{props.weather.weather[0].description}</p>
             <hr></hr>
         </DisplayContent>
     )
 }
 
-const DisplayContent = styled.div`
+type PropsSC = {
+    $weather?: WeatherEnum
+}
+
+const DisplayContent = styled.div<PropsSC>`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,20 +71,38 @@ const DisplayContent = styled.div`
         justify-content: center;
         gap: 0.25vw;
 
-        span {
-            font-size: 280px;
-            font-size: calc(18px + 12vw);
-            line-height: 100px;
-
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
+        img {
+            width: 100px;
+            width: calc(52px + 6vw);
+            aspect-ratio: 1;
         }
 
         h2 {
             align-self: flex-start;
             font-size: 100px;
             font-size: calc(12px + 4vw);
+        }
+
+        h2,
+        h1 {
+            color: ${(p) => {
+                switch (p.$weather) {
+                    case WeatherEnum.Clear:
+                        return '#EC6E4C'
+                    case WeatherEnum.Drizzle:
+                        return '#92cae6'
+                    case WeatherEnum.Clouds:
+                        return '#464443'
+                    case WeatherEnum.Mist:
+                        return '#92918d'
+                    case WeatherEnum.Rain:
+                        return '#3680AA'
+                    case WeatherEnum.Snow:
+                        return '#cfcbcb'
+                    case WeatherEnum.Thunderstorm:
+                        return '#9065B0'
+                }
+            }};
         }
     }
 `

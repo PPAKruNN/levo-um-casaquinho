@@ -1,10 +1,26 @@
+import dayjs from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
 import styled from 'styled-components'
+import { WeekDays } from '../protocols'
 
-export function DateDisplay() {
+dayjs.extend(weekday)
+
+type DateDisplayProps = {
+    utcNow?: number
+}
+
+export function DateDisplay(props: DateDisplayProps) {
+    let date
+
+    if (props.utcNow == undefined) date = dayjs()
+    else date = dayjs(props.utcNow * 1000)
+
     return (
         <DisplayContent>
-            <h3>16/11/2023</h3>
-            <h3>Quinta-feira, 16:32</h3>
+            <h3>{date.format('DD/MM/YYYY')}</h3>
+            <h3>
+                {WeekDays[date.weekday()]}, {date.format('HH:mm')}
+            </h3>
         </DisplayContent>
     )
 }

@@ -1,12 +1,22 @@
 export enum WeatherEnum {
-    'clear',
-    'clouds',
-    'rain',
-    'snow',
-    'thunderstorm',
-    'drizzle',
-    'mist',
+    'Clear' = 'Clear',
+    'Clouds' = 'Clouds',
+    'Rain' = 'Rain',
+    'Snow' = 'Snow',
+    'Thunderstorm' = 'Thunderstorm',
+    'Drizzle' = 'Drizzle',
+    'Mist' = 'Mist',
 }
+
+export const WeekDays = [
+    'Domingo',
+    'Segunda',
+    'Terça',
+    'Quarta',
+    'Quinta',
+    'Sexta',
+    'Sábado',
+]
 
 export type Geocode = {
     local_names: {
@@ -44,8 +54,8 @@ export type Weather = {
     }
     weather: {
         id: number
-        main: string
+        main: WeatherEnum
         description: string
         icon: string
-    }
+    }[]
 }
