@@ -19,7 +19,8 @@ export const WeekDays = [
 ]
 
 export type Geocode = {
-    local_names: {
+    name: string
+    local_names?: {
         pt: string
     }
     lat: number

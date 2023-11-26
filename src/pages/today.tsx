@@ -13,35 +13,44 @@ export function Today() {
         <TodayPage>
             <Tabs />
 
-            <div>
-                <CityDisplay />
-                <section>
-                    <InfoBlock
-                        title="Mínima"
-                        desc={`${KelvinToUnit(
-                            weather?.main.temp_min ?? 0,
-                            unit
-                        )} °${unit}`}
-                    />
-                    <InfoBlock
-                        title="Máxima"
-                        desc={`${KelvinToUnit(
-                            weather?.main.temp_max ?? 0,
-                            unit
-                        )} °${unit}`}
-                    />
-                    <InfoBlock
-                        title="Umidade"
-                        desc={`${weather?.main.humidity}%`}
-                    />
-                    <InfoBlock
-                        title="Velocidade do vento"
-                        desc={`${weather?.wind.speed} m/s`}
-                    />
-                </section>
-            </div>
+            {!weather ? (
+                <h1>
+                    Você ainda não selecionou uma cidade! Faça uma pesquisa na
+                    barra de pesquisa ao lado!
+                </h1>
+            ) : (
+                <>
+                    <div>
+                        <CityDisplay />
+                        <section>
+                            <InfoBlock
+                                title="Mínima"
+                                desc={`${KelvinToUnit(
+                                    weather?.main.temp_min ?? 0,
+                                    unit
+                                )}° ${unit}`}
+                            />
+                            <InfoBlock
+                                title="Máxima"
+                                desc={`${KelvinToUnit(
+                                    weather?.main.temp_max ?? 0,
+                                    unit
+                                )}° ${unit}`}
+                            />
+                            <InfoBlock
+                                title="Umidade"
+                                desc={`${weather?.main.humidity}%`}
+                            />
+                            <InfoBlock
+                                title="Velocidade do vento"
+                                desc={`${weather?.wind.speed} m/s`}
+                            />
+                        </section>
+                    </div>
 
-            <span>Não, você não deve levar um casaquinho</span>
+                    <span>Não, você não deve levar um casaquinho</span>
+                </>
+            )}
 
             <p>
                 Dados fornecidos pela <a>Open Weather API</a>

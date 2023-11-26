@@ -4,17 +4,12 @@ import { useWeather } from '../hooks/context-hooks'
 export function CityDisplay() {
     const { geocode } = useWeather()
 
-    if (!geocode)
-        return (
-            <h1>
-                Você ainda não selecionou uma cidade! Faça uma pesquisa na barra
-                de pesquisa ao lado!
-            </h1>
-        )
+    if (!geocode) return <></>
+    console.log(geocode)
 
     return (
         <CityContent>
-            <h1>{geocode.local_names.pt}</h1>
+            <h1>{geocode.local_names?.pt ?? geocode.name}</h1>
             <p>
                 Lat: {geocode?.lat.toFixed(2)} Long: {geocode?.lon.toFixed(2)}
             </p>
