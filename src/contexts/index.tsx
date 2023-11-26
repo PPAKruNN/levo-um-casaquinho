@@ -1,3 +1,5 @@
+import { WeatherProvider } from './weather-context'
+
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
-    return { children }
+    return <WeatherProvider>{children}</WeatherProvider>
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import logo from '../assets/casaco.svg'
 import { CitySearch } from './city-search'
 import { WeatherDisplay } from './weather-display'
-import { Weather } from '../protocols'
+import { WeatherEnum } from '../protocols'
 import { DateDisplay } from './date-display'
 import { Settings } from './settings'
 
@@ -19,7 +19,7 @@ export function ControlPanel() {
 
             <CitySearch />
 
-            <WeatherDisplay weather={Weather.mist} />
+            <WeatherDisplay weather={WeatherEnum.mist} />
 
             <DateDisplay />
 

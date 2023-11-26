@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { Weather } from '../protocols'
+import { WeatherEnum } from '../protocols'
 
 type WeatherDisplayProps = {
-    weather: Weather
+    weather: WeatherEnum
 }
 
 export function WeatherDisplay(props: WeatherDisplayProps) {
