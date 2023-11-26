@@ -2,7 +2,16 @@ import { createContext, useState } from 'react'
 import { ApiService } from '../services/api'
 import { Geocode, Weather, WeatherForecast } from '../protocols'
 
-const WeatherContext = createContext({})
+const WeatherContext = createContext<
+    | {
+          updateLocation: (geocode: Geocode) => Promise<void>
+          searchForCity: (cityName: string) => Promise<Geocode[]>
+          forecast?: WeatherForecast
+          weather?: Weather
+          geocode?: Geocode
+      }
+    | undefined
+>(undefined)
 
 const WeatherProvider = ({ children }: { children: React.ReactNode }) => {
     const [forecast, setForecast] = useState<WeatherForecast>()

@@ -1,15 +1,46 @@
+import { useRef } from 'react'
 import { FaSearch } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 import styled from 'styled-components'
+import { useWeather } from '../hooks/context-hooks'
 
 export function CitySearch() {
+    const cityInput = useRef<HTMLInputElement>(null)
+    const { searchForCity, updateLocation } = useWeather()
+
+    async function handleSearch() {
+        if (cityInput.current == null || cityInput.current.value == '') return
+
+        const searchValue = cityInput.current.value
+        const searchPromise = searchForCity(searchValue)
+
+        toast.promise(searchPromise, {
+            pending: 'Buscando dados "nas nuvens"',
+            error: 'Erro ao se conectar nos servidores meteorológicos, verifique sua conexão com a internet ou tente novamente mais tarde.',
+        })
+        const geocodeOptions = await searchPromise
+
+        if (geocodeOptions.length === 0) {
+            toast.error(
+                'Cidade não encontrada, verifique se o nome está correto'
+            )
+            return
+        }
+        updateLocation(geocodeOptions[0])
+    }
+
     return (
         <SearchBox>
-            <FaSearch size={24} style={{ fill: '#8B9CAF' }} />
+            <span onClick={handleSearch}>
+                <FaSearch size={24} style={{ fill: '#8B9CAF' }} />
+            </span>
 
             <input
                 type="text"
                 alt="City search input"
                 placeholder="Procure por uma cidade"
+                ref={cityInput}
+                onSubmit={handleSearch}
             />
         </SearchBox>
     )
@@ -28,6 +59,10 @@ const SearchBox = styled.div`
     box-shadow: 0px 12px 48px rgba(49, 79, 124, 0.12);
     background-color: #ededef;
     outline: transparent;
+
+    span:hover {
+        cursor: pointer;
+    }
 
     &:focus-within {
         outline: 2px solid #aecce4;
