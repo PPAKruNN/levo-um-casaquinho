@@ -24,7 +24,8 @@ export function Upcoming() {
             )}
 
             <p>
-                Dados fornecidos pela <a>Open Weather API</a>
+                Dados fornecidos pela{' '}
+                <a href="https://openweathermap.org/">Open Weather API</a>
             </p>
         </UpcomingPage>
     )
@@ -74,6 +75,8 @@ const UpcomingPage = styled.div`
         font-size: calc(16px + 0.2vw);
 
         a {
+            cursor: pointer;
+            text-decoration: none;
             color: #96a7f2;
         }
     }
