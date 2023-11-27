@@ -1,41 +1,11 @@
 import styled from 'styled-components'
 import { Tabs } from '../components/tabs'
 import { CityDisplay } from '../components/city-display'
-import {
-    CartesianGrid,
-    Line,
-    LineChart,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis,
-} from 'recharts'
-import { useUnit, useWeather } from '../hooks/context-hooks'
-import { WeekDays } from '../protocols'
-import dayjs from 'dayjs'
-import { KelvinToUnit } from '../utils'
+import { WeatherChart } from '../components/weather-chart'
+import { useWeather } from '../hooks/context-hooks'
 
 export function Upcoming() {
     const { forecast } = useWeather()
-    const { unit } = useUnit()
-
-    function genData() {
-        if (!forecast || !forecast.list) return
-        const list = forecast?.list
-
-        console.log(list)
-
-        return list.map((curr) => {
-            const date = dayjs
-                .unix(curr.dt)
-                .utcOffset(forecast.city.timezone / 60)
-
-            return {
-                x: `${date.format('DD/MM')} (${WeekDays[date.weekday()]})`,
-                y: KelvinToUnit(curr.main.temp, unit),
-            }
-        })
-    }
 
     return (
         <UpcomingPage>
@@ -49,37 +19,7 @@ export function Upcoming() {
             ) : (
                 <div>
                     <CityDisplay />
-                    <ResponsiveContainer width="95%" height="50%">
-                        <LineChart
-                            width={500}
-                            height={300}
-                            data={genData()}
-                            margin={{
-                                top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5,
-                            }}
-                        >
-                            <CartesianGrid stroke="#F5F5F5" />
-                            <XAxis dataKey="x" />
-                            <YAxis tickFormatter={(num) => `${num}°${unit}`} />
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: '#EFEFEF',
-                                    borderRadius: '5px',
-                                    border: 'none',
-                                }}
-                                labelStyle={{ color: '#000000' }}
-                                formatter={(num) => `${num} KK`}
-                            />
-                            <Line
-                                type="monotone"
-                                dataKey="y"
-                                stroke="#4d4494"
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
+                    <WeatherChart />
                 </div>
             )}
 

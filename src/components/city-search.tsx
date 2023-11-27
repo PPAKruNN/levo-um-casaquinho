@@ -23,12 +23,15 @@ export function CitySearch() {
         const geocodeOptions = await searchPromise
         cityInput.current.disabled = false
 
+        if (!geocodeOptions) return
+
         if (geocodeOptions.length === 0) {
             toast.error(
                 'Cidade não encontrada, verifique se o nome está correto'
             )
-            return
+            return []
         }
+
         updateLocation(geocodeOptions[0])
     }
 

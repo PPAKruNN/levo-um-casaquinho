@@ -8,15 +8,7 @@ export enum WeatherEnum {
     'Mist' = 'Mist',
 }
 
-export const WeekDays = [
-    'Domingo',
-    'Segunda',
-    'Terça',
-    'Quarta',
-    'Quinta',
-    'Sexta',
-    'Sábado',
-]
+export const WeekDays = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb']
 
 export type Geocode = {
     name: string
