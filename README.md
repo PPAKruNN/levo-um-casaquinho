@@ -1,3 +1,5 @@
+![Levo um casaquinho? Demo gif](https://github.com/PPAKruNN/levo-um-casaquinho/blob/main/img/demo.gif?raw=true 'Levo um casaquinho? Demo gif')
+
 # Levo um casaquinho?
 
 > Uma das principais dores de quem vai dar um passeio ou pretende ir para algum destino por alguns dias é saber que roupa levar! 😫
@@ -28,9 +30,13 @@ E por fim, há um switch que permite trocar a unidade de medida de temperatura e
 
 Nessa página, o usuário pode visualizar o nome da localidade e coordenadas. Além disso, também tem acesso a dados sobre temperatura minínima e máxima, umidade e velocidade do vento. E também recebe um aconselhamento sobre levar um casaquinho ou não.
 
+![Levo um casaquinho? Today page](https://github.com/PPAKruNN/levo-um-casaquinho/blob/main/img/today.png?raw=true 'Levo um casaquinho? Today png')
+
 ### Página `/upcoming`
 
 Nessa página, além de visualizar o nome da localidade e suas respectivas coordenadas, o usuário também pode ver um gráfico de previsão do clima dos próximos 5 dias, com dados espaçados por um intervalo de 3 horas.
+
+![Levo um casaquinho? Upcoming page](https://github.com/PPAKruNN/levo-um-casaquinho/blob/main/img/upcoming.png?raw=true 'Levo um casaquinho? Upcoming png')
 
 ## Como executar o projeto?
 
