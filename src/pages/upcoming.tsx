@@ -25,7 +25,9 @@ export function Upcoming() {
 
             <p>
                 Dados fornecidos pela{' '}
-                <a href="https://openweathermap.org/">Open Weather API</a>
+                <a target="_blank" href="https://openweathermap.org/">
+                    Open Weather API
+                </a>
             </p>
         </UpcomingPage>
     )
