@@ -27,6 +27,20 @@ function App() {
 const Content = styled.div`
     height: 100vh;
     display: flex;
+
+    @media (max-width: 800px) {
+        flex-direction: column;
+
+        & > aside {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        & > div:first-child {
+            height: 100vh;
+            width: 100vw;
+        }
+    }
 `
 
 export default App

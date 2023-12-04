@@ -50,6 +50,15 @@ const AsideBar = styled.aside`
 
     background-color: #ffffff;
 
+    @media (max-width: 800px) {
+        width: 100%;
+        height: max-content;
+        box-sizing: border-box;
+        padding: 64px 5%;
+
+        gap: 48px;
+    }
+
     header {
         display: flex;
         align-items: center;

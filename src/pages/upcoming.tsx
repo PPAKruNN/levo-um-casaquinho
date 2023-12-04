@@ -88,4 +88,12 @@ const UpcomingPage = styled.div`
         flex-wrap: wrap;
         gap: 2vw 3.5vw;
     }
+
+    @media (max-width: 800px) {
+        width: 100%;
+        padding: 64px 5%;
+        box-sizing: border-box;
+
+        gap: 48px;
+    }
 `

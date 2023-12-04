@@ -76,7 +76,7 @@ const TodayPage = styled.div`
 
     box-sizing: border-box;
 
-    width: 65%;
+    min-width: 65%;
     height: 100vh;
 
     padding: 32px 48px;
@@ -114,5 +114,19 @@ const TodayPage = styled.div`
         display: flex;
         flex-wrap: wrap;
         gap: 2vw 3.5vw;
+    }
+
+    @media (max-width: 800px) {
+        min-width: 100%;
+        height: max-content;
+        padding: 64px 5%;
+        box-sizing: border-box;
+
+        gap: 32px;
+
+        & > div {
+            height: 100%;
+            gap: 64px;
+        }
     }
 `
