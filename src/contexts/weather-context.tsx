@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 const WeatherContext = createContext<
     | {
           updateLocation: (geocode: Geocode) => Promise<void>
-          searchForCity: (cityName: string) => Promise<Geocode[] | undefined>
+          searchForCity: (cityName: string) => Promise<Geocode[]>
           forecast?: WeatherForecast
           weather?: Weather
           geocode?: Geocode
@@ -54,6 +54,7 @@ const WeatherProvider = ({ children }: { children: React.ReactNode }) => {
             return options
         } catch (error) {
             toast.error('Houve um erro desconhecido ao pesquisar pela cidade.')
+            return []
         }
     }
 

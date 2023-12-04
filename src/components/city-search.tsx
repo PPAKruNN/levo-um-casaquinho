@@ -9,30 +9,35 @@ export function CitySearch() {
     const { searchForCity, updateLocation } = useWeather()
 
     async function handleSearch() {
-        if (cityInput.current == null || cityInput.current.value == '') return
+        if (cityInput.current == null || cityInput.current.value.trim() == '')
+            return
 
-        const searchValue = cityInput.current.value
-        const searchPromise = searchForCity(searchValue)
-        cityInput.current.disabled = true
-
-        toast.promise(searchPromise, {
-            pending: 'Buscando dados "nas nuvens"',
-            error: 'Erro ao se conectar nos servidores meteorológicos, verifique sua conexão com a internet ou tente novamente mais tarde.',
-        })
-
+        const searchPromise = searchForCity(cityInput.current.value)
+        searchToastHandler(searchPromise)
         const geocodeOptions = await searchPromise
-        cityInput.current.disabled = false
-
-        if (!geocodeOptions) return
 
         if (geocodeOptions.length === 0) {
             toast.error(
                 'Cidade não encontrada, verifique se o nome está correto'
             )
-            return []
+            return
         }
 
         updateLocation(geocodeOptions[0])
+    }
+
+    async function searchToastHandler(prom: Promise<unknown>) {
+        if (cityInput.current == null) return
+        cityInput.current.disabled = true
+
+        toast.promise(prom, {
+            pending: 'Buscando dados "nas nuvens"',
+            error: 'Erro ao se conectar nos servidores meteorológicos, verifique sua conexão com a internet ou tente novamente mais tarde.',
+        })
+
+        await prom
+
+        cityInput.current.disabled = false
     }
 
     return (
